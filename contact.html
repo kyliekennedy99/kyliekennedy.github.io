@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact | Kylie Kennedy</title>
+  <link rel="icon" href="https://sdmntprwestus.oaiusercontent.com/files/00000000-b740-6230-aec0-802f12dd6af8/raw?se=2025-08-05T02%3A57%3A33Z&sp=r&sv=2024-08-04&sr=b&scid=c8011da1-5010-533a-bc8b-ccd0e985c503&skoid=ea0c7534-f237-4ccd-b7ea-766c4ed977ad&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-04T21%3A55%3A23Z&ske=2025-08-05T21%3A55%3A23Z&sks=b&skv=2024-08-04&sig=AG6HirxAv6xIGGR3RHyzQKUutVWFv8C94chnixH3bFs%3D" type="image/png" sizes="32x32" />
+
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+  <link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body id="top">
+  <header class="hero subpage-hero">
+    <h1>Get in touch</h1>
+  </header>
+
+  <nav class="quick-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="docs.html">Docs</a>
+    <a href="#top" class="totop"><i class="fa-solid fa-angle-up"></i></a>
+  </nav>
+
+  <main class="section glass">
+    <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="grid">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" required />
+          </label>
+      
+          <label>
+            <span>Email</span>
+            <input type="email" name="_replyto" required />
+          </label>
+      
+          <label class="full">
+            <span>Message</span>
+            <textarea name="message" rows="6" required></textarea>
+          </label>
+        </div>
+      
+        <!-- honeypot to curb spam -->
+        <input type="text" name="_gotcha" style="display:none" />
+      
+        <button type="submit">
+          Send&nbsp;<i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+      
+
+    <p style="margin-top:1.5rem;font-size:.9rem">
+      Prefer plain e-mail? Write me at
+      <a href="mailto:kkennedy27@wisc.edu">kkennedy27@wisc.edu</a>.
+    </p>
+  </main>
+
+  <footer>&copy; 2025 Kylie Kennedy</footer>
+</body>
+</html>

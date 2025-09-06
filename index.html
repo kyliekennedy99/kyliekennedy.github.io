@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts + Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-FRgN6Bz4..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" href="https://sdmntprwestus.oaiusercontent.com/files/00000000-b740-6230-aec0-802f12dd6af8/raw?se=2025-08-05T02%3A57%3A33Z&sp=r&sv=2024-08-04&sr=b&scid=c8011da1-5010-533a-bc8b-ccd0e985c503&skoid=ea0c7534-f237-4ccd-b7ea-766c4ed977ad&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-04T21%3A55%3A23Z&ske=2025-08-05T21%3A55%3A23Z&sks=b&skv=2024-08-04&sig=AG6HirxAv6xIGGR3RHyzQKUutVWFv8C94chnixH3bFs%3D" type="image/png" sizes="32x32" />
+
+    <title>Kylie Kennedy | Resume</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+
+  <body>
+    <!-- ===== HERO ===== -->
+    <header class="hero" id="top">
+      <div class="hero-inner">
+        <img class="hero-avatar" src="https://videos.openai.com/vg-assets/assets%2Ftask_01k1vs0mmxfj18kc7rk1bp35r3%2F1754352688_img_0.webp?st=2025-08-04T22%3A39%3A34Z&se=2025-08-10T23%3A39%3A34Z&sks=b&skt=2025-08-04T22%3A39%3A34Z&ske=2025-08-10T23%3A39%3A34Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=8ebb0df1-a278-4e2e-9c20-f2d373479b3a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=otKXyheES3JNkRPMVrsJsJGcDpjoo8XLGbP9FWD5okw%3D&az=oaivgprodscus" alt="Kylie Kennedy head-shot" />
+
+    <h1>Kylie Kennedy</h1>
+    <p class="tagline">Fourth-year Computer Science student @ UW-Madison</p>
+
+        <address>
+          <i class="fa-solid fa-location-dot"></i> Madison, WI &nbsp;·&nbsp;
+          <i class="fa-solid fa-phone"></i>
+          <a href="tel:+16513156717">(651) 315-6717</a> &nbsp;·&nbsp;
+          <i class="fa-solid fa-envelope"></i>
+          <a href="mailto:kkennedy27@wisc.edu">kkennedy27@wisc.edu</a>
+        </address>
+
+        <button id="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+      <a href="#experience" class="scroll-cue" aria-label="Scroll down"
+        ><i class="fa-solid fa-angle-down"></i
+      ></a>
+    </header>
+
+    <!-- ===== NAV ===== -->
+    <nav class="quick-nav">
+        <a href="index.html" class = "active">Home</a>
+        <a href="about.html" class = "active">About Me</a>
+        <a href="portfolio.html" class = "active">Portfolio</a>
+        <a href="contact.html" class = "active">Contact</a>
+        <a href="docs.html" class = "active">Docs</a>
+
+        <a href="#top" class="totop" aria-label="Back to top">
+          <i class="fa-solid fa-angle-up"></i>
+        </a>
+      </nav>
+      
+
+    <main>
+      <!-- ===== EXPERIENCE ===== -->
+      <section id="experience" class="section">
+        <h2>Experience</h2>
+        <ul class="timeline">
+          <!-- Each li becomes a “milestone” on the vertical line -->
+          <li>
+            <h3>Teaching Assistant — UW–Madison CS Dept.</h3>
+            <span class="meta">Oct 2023 – Apr 2024</span>
+            <p>Taught advanced Java, hosted office hours, advised 30 students.</p>
+          </li>
+
+          <li>
+            <h3>Programming Instructor — DoIT</h3>
+            <span class="meta">Oct 2023 – Apr 2024</span>
+            <p>
+              Introduced Python to under-resourced high-school students; managed
+              Canvas sites.
+            </p>
+          </li>
+
+          <li>
+            <h3>Website Developer — JBX Strategies</h3>
+            <span class="meta">Minneapolis, MN · Oct 2023 – Apr 2024</span>
+            <p>Crafted responsive client sites in HTML / CSS / JS / PHP.</p>
+          </li>
+
+          <!-- Add other roles as <li> ... </li> -->
+        </ul>
+      </section>
+
+      <!-- ===== EDUCATION ===== -->
+      <section id="education" class="section glass">
+        <!-- ✨ new line ↓ -->
+        <img class="edu-logo" src="https://1000logos.net/wp-content/uploads/2021/07/Wisconsin-Badgers-logo.png" alt="Wisconsin Badgers logo" />
+        
+        <h2>Education</h2>
+        <article>
+          <h3>B.S. Computer Sciences — UW-Madison</h3>
+          <span class="meta">Sep 2022 – Aug 2025</span>
+          <p>GPA 3.5 · Dean’s List 2021-2024 · Honors in the Major</p>
+        </article>
+      </section>
+      
+
+      <!-- ===== SKILLS ===== -->
+      <section id="skills" class="section">
+        <h2>Skills</h2>
+
+        <div class="skill-set">
+          <span>Java</span><div class="bar b90"></div>
+          <span>Python</span><div class="bar b90"></div>
+          <span>C/C++</span><div class="bar b75"></div>
+          <span>HTML & CSS</span><div class="bar b95"></div>
+          <span>JavaScript / React</span><div class="bar b85"></div>
+          <span>SQL</span><div class="bar b70"></div>
+        </div>
+      </section>
+
+      <!-- ===== OTHER ===== -->
+      <section id="other" class="section glass">
+        <h2>Other</h2>
+        <ul>
+          <li>UW Health Volunteer — Adult psychiatric unit support</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>&copy; 2025 Kylie Kennedy</footer>
+  </body>
+</html>

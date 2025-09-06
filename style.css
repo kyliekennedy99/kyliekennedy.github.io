@@ -1,0 +1,410 @@
+/* ========= CORE RESET ========= */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  --bg:#fafafa;
+  --fg:#222;
+  --accent:#b40000;
+  --glass-bg:rgba(255,255,255,.55);
+  --glass-brd:rgba(255,255,255,.25);
+  font-family:Poppins,system-ui,sans-serif;
+  color:var(--fg);
+  background:var(--bg);
+}
+
+/* ========= HERO ========= */
+/* ========= HERO (blurred photo + stronger tint) ========= */
+.hero{
+    position:relative;
+    min-height:65vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;                /* clip the blurred layer edges */
+    animation:none;                 /* ensure no background pan */
+  }
+  
+  /* --- blurred shoreline photo layer --- */
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:url("https://onwisconsin.uwalumni.com/content/uploads/2020/08/Aerial_Campus18_1300.jpg") center/cover no-repeat;
+    filter:blur(6px);
+    transform:scale(1.05);          /* keep edges covered after blur */
+    z-index:-2;
+  }
+  
+  /* --- darker warm gradient overlay --- */
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(
+                140deg,
+                rgba(48,44,44,0.70) 0%,
+                rgba(33,29,24,0.70) 50%);
+    z-index:-1;
+  }
+  
+  /* keep jump arrow animation unchanged */
+@keyframes jump{50%{transform:translate(-50%,10px)}}
+  
+@keyframes bgShift{0%{background-position:0 0}100%{background-position:100% 100%}}
+.hero-inner{max-width:720px;padding:3rem 1rem}
+.hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:600;letter-spacing:-.5px;color:#fff}
+.tagline{color:#fff;font-size:1.2rem;margin:.7rem 0 1.2rem}
+address{font-style:normal;font-size:1rem;color:#fff;line-height:1.6}
+address a{color:#fff;text-decoration:underline dotted 2px}
+#theme-toggle{
+  margin-top:2rem;background:#fff2;border:none;border-radius:50%;
+  padding:.65rem .8rem;font-size:1.1rem;cursor:pointer;color:#fff;
+  transition:transform .25s ease;
+}
+#theme-toggle:hover{transform:rotate(20deg) scale(1.15)}
+#theme-toggle:active{transform:scale(.9)}
+.scroll-cue{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-size:1.75rem;color:#fff;animation:jump 2s infinite
+}
+@keyframes jump{50%{transform:translate(-50%,10px)}}
+
+/* ========= NAV (consistent everywhere + click animation) ========= */
+.quick-nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  padding:.5rem 1rem;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #ddd;
+}
+
+.quick-nav a{
+  --link-bg: transparent;
+  color:var(--fg);
+  font-weight:500;
+  font-size:.9rem;
+  text-decoration:none;
+  padding:.42rem .95rem;
+  border-radius:8px;
+  background:var(--link-bg);
+  transition:background .2s, transform .2s ease;
+}
+
+/* active page highlight – add class="active" to that link in HTML */
+.quick-nav a.active{
+  --link-bg: rgba(0,0,0,.07);
+  color:var(--accent);
+}
+
+/* hover lift */
+.quick-nav a:hover{
+  background:rgba(0,0,0,.06);
+  transform:translateY(-2px);
+}
+
+/* click “press” */
+.quick-nav a:active{
+  transform:scale(.93);
+}
+
+/* right-side “back-to-top” keeps existing behavior */
+.totop{margin-left:auto}
+
+/* Dark-mode tweaks */
+body.dark .quick-nav{
+  background:rgba(20,20,20,.85);
+  border-color:#222;
+}
+body.dark .quick-nav a:hover{
+  background:rgba(255,255,255,.08);
+}
+body.dark .quick-nav a.active{
+  --link-bg: rgba(255,255,255,.10);
+  color:var(--accent);
+}
+
+
+/* ========= SECTIONS ========= */
+.section{max-width:950px;margin:4rem auto;padding:0 1.5rem}
+.section h2{font-size:2rem;color:var(--accent);margin-bottom:2rem}
+.section.glass{
+  background:var(--glass-bg);border:1px solid var(--glass-brd);
+  border-radius:18px;box-shadow:0 4px 30px rgba(0,0,0,.05);padding:2.5rem 2rem;
+  transition:transform .25s ease;
+}
+.section.glass:hover{transform:translateY(-4px)}
+
+/* ========= TIMELINE (bullets shifted left) ========= */
+.timeline{list-style:none;position:relative;padding-left:2rem}
+.timeline::before{
+  content:"";position:absolute;left:.5rem;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--accent),transparent 70%);
+}
+.timeline li{
+  margin-bottom:1.5rem;position:relative;opacity:0;transform:translateY(40px);
+  transition:transform .25s ease;
+}
+.timeline li:hover{transform:translateY(-3px)}
+.timeline li::before{
+  content:"";position:absolute;left:-.8rem;top:.7rem;width:9px;height:9px;
+  background:var(--accent);border-radius:50%;transition:transform .25s ease;
+}
+.timeline li:hover::before{transform:scale(1.4)}
+.timeline h3{font-size:1.15rem;margin-bottom:.15rem;margin-left:1rem;font-weight:600}
+.meta{font-size:.85rem;color:#555}
+.timeline p{margin-top:.4rem;font-size:.95rem;line-height:1.5}
+
+/* ========= SKILL BARS ========= */
+.skill-set{
+  display:grid;grid-template-columns:1fr 3fr;align-items:center;
+  row-gap:.75rem;column-gap:1.25rem
+}
+.skill-set span{
+  font-family:'Fira Code',monospace;font-size:.9rem;cursor:default;
+  transition:color .2s;
+}
+.skill-set span:hover{color:var(--accent)}
+.bar{
+  height:.55rem;border-radius:5px;background:#d8d8d8;overflow:hidden;position:relative
+}
+.bar::after{
+  content:"";position:absolute;left:0;top:0;bottom:0;background:var(--accent);
+  width:0;transition:width 1.6s cubic-bezier(.4,0,.2,1),filter .2s;
+}
+.b95::after{width:95%}.b90::after{width:90%}.b85::after{width:85%}
+.b75::after{width:75%}.b70::after{width:70%}
+.skill-set span:hover + .bar::after{filter:brightness(1.25)}
+
+/* ========= FOOTER ========= */
+footer{text-align:center;font-size:.85rem;color:#666;margin:4rem 0 2rem}
+
+/* ========= DARK MODE ========= */
+body.dark{
+  --bg:#111;--fg:#f3f3f3;--accent:#ff7d7d;
+  --glass-bg:rgba(30,30,30,.6);--glass-brd:rgba(255,255,255,.1)
+}
+body.dark .quick-nav{background:rgba(20,20,20,.85);border-color:#222}
+body.dark .timeline::before{background:var(--accent)}
+body.dark .meta{color:#aaa}
+body.dark .bar{background:#333}
+
+/* ========= REVEAL ANIMATION ========= */
+.reveal{opacity:1 !important;transform:none !important}
+
+/* ========= RESPONSIVE ========= */
+@media(max-width:600px){
+  .hero{min-height:70vh}
+  .skill-set{grid-template-columns:1fr}
+  .skill-set span{margin-bottom:.25rem}
+}
+
+/* === Education logo (bottom-left, animates on its own hover) === */
+#education{position:relative}
+
+.edu-logo{
+  position:absolute;
+  bottom:-35px;      /* tucks logo just outside the card corner */
+  left:-35px;        /* nudge horizontally; tweak as needed     */
+  width:110px;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));
+  opacity:.85;
+  transition:transform .4s ease, opacity .4s ease;
+}
+
+.edu-logo:hover{
+  transform:rotate(-8deg) scale(1.15);   /* slight CCW tilt feels nicer here */
+  opacity:1;
+}
+
+body.dark .edu-logo{filter:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
+
+
+/* === Sub-page hero banner === */
+.subpage-hero{
+    min-height:45vh;                                 /* shorter banner   */
+    background:
+      linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+      url("https://i.ibb.co/hRYwDr39/Mendota-shoreline.jpg") center/cover no-repeat;
+  }
+  .subpage-hero h1{color:#fff;font-size:clamp(2rem,4vw,3rem)}
+  
+  /* === Portfolio grid === */
+  .portfolio-grid{
+    display:grid;
+    gap:1.5rem;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  }
+  .project{
+    position:relative;
+    overflow:hidden;
+    border-radius:14px;
+    box-shadow:0 4px 16px rgba(0,0,0,.15);
+    transition:transform .25s;
+  }
+  .project:hover{transform:translateY(-6px)}
+  .project img{width:100%;height:100%;display:block;transition:transform .25s ease;filter:brightness(.85)}
+  .project:hover img{transform:scale(1.08);filter:brightness(1)}
+  .proj-info{
+    position:absolute;bottom:0;left:0;right:0;
+    padding:.9rem 1rem;background:rgba(0,0,0,.65);color:#fff;
+  }
+  .proj-info h3{margin:0;font-size:1rem}
+  .proj-info span{font-size:.8rem;color:#ffdfdf}
+  
+/* === CONTACT FORM === */
+.contact-form{
+    max-width:680px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
+  }
+  
+  .contact-form .grid{
+    display:grid;
+    gap:1.25rem 1.5rem;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  }
+  
+  .contact-form label{
+    display:flex;
+    flex-direction:column;
+    font-weight:500;
+    font-size:.9rem;
+    gap:.4rem;
+  }
+  
+  .contact-form input,
+  .contact-form textarea{
+    padding:.65rem .8rem;
+    font-size:.95rem;
+    border:2px solid #ddd;
+    border-radius:8px;
+    background:#fff;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  
+  .contact-form input:focus,
+  .contact-form textarea:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(180,0,0,.15);
+    outline:none;
+  }
+  
+  .contact-form textarea{resize:vertical}
+  
+  .contact-form .full{grid-column:1/-1}        /* spans both cols on desktop */
+  
+  .contact-form button{
+    align-self:flex-start;                     /* keep button left-aligned */
+    padding:.7rem 1.25rem;
+    font-size:1rem;
+    font-weight:600;
+    color:#fff;
+    background:var(--accent);
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:.45rem;
+    transition:transform .2s, background .2s;
+  }
+  
+  .contact-form button:hover{transform:translateY(-2px);background:#a00000}
+  .contact-form button:active{transform:scale(.95)}
+  
+  body.dark .contact-form input,
+  body.dark .contact-form textarea{
+    background:#1e1e1e;
+    border-color:#444;
+    color:#f3f3f3;
+  }
+  
+  /* === About-page profile row === */
+.about-hero{
+    display:flex;
+    flex-wrap:wrap;
+    gap:2rem;
+    align-items:center;
+  }
+  .profile-pic{
+    width:180px;
+    height:180px;
+    object-fit:cover;
+    border-radius:50%;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+  }
+  .about-text{
+    flex:1 1 260px;
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+    font-size:1rem;
+    line-height:1.6;
+  }
+  
+  /* === Gallery grid === */
+  .gallery{
+    margin-top:1.5rem;
+    columns:1;                       /* mobile default */
+    column-gap:1rem;
+  }
+  .gallery img{
+    width:100%;
+    margin-bottom:1rem;
+    border-radius:12px;
+    box-shadow:0 4px 16px rgba(0,0,0,.1);
+    transition:transform .25s;
+  }
+  .gallery img:hover{transform:scale(1.04)}
+  @media (min-width:600px){ .gallery{columns:2} }
+  @media (min-width:900px){ .gallery{columns:3} }
+  
+  /* === Avatar in home hero === */
+.hero-avatar{
+    width:160px;
+    height:160px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid rgba(255,255,255,.75);
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+    margin:0 auto 1.3rem;           /* centers & spaces above headline */
+    display:block;
+  }
+
+  /* === Docs page grid === */
+.docs-grid{
+    display:grid;
+    gap:2rem;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  }
+  .doc-card{
+    background:var(--glass-bg);
+    border:1px solid var(--glass-brd);
+    border-radius:16px;
+    padding:1.8rem 1.4rem;
+    text-align:center;
+    box-shadow:0 4px 20px rgba(0,0,0,.05);
+    transition:transform .25s;
+  }
+  .doc-card:hover{transform:translateY(-6px)}
+  .doc-card i{
+    font-size:2.2rem;
+    color:var(--accent);
+    margin-bottom:.6rem;
+  }
+  .doc-card h3{margin-bottom:.8rem;font-size:1.15rem}
+  .doc-card a{
+    display:inline-block;
+    margin-top:.3rem;
+    font-size:.9rem;
+    color:var(--accent);
+    text-decoration:underline;
+  }
+  .doc-card ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem}
+  
