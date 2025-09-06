@@ -67,70 +67,69 @@ address a{color:#fff;text-decoration:underline dotted 2px}
   font-size:1.75rem;color:#fff;animation:jump 2s infinite
 }
 @keyframes jump{50%{transform:translate(-50%,10px)}}
-
-/* ========= NAV (consistent everywhere + click animation) ========= */
+/* ========= NAV (refined, professional) ========= */
+/* ========= NAV (centered, bold text, lighter hover) ========= */
 .quick-nav{
-  position:sticky;
-  top:0;
-  z-index:100;
-  display:flex;
-  gap:1rem;
-  justify-content:center;
-  padding:.5rem 1rem;
-  background:rgba(255,255,255,.7);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;             /* center entire nav */
+  align-items: center;
+  gap: 1.5rem;                         /* more breathing space */
+  padding: .75rem 1rem;
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e6e6e6;
 }
 
+/* Links */
 .quick-nav a{
-  --link-bg: transparent;
-  color:var(--fg);
-  font-weight:500;
-  font-size:.9rem;
-  text-decoration:none;
-  padding:.42rem .95rem;
-  border-radius:8px;
-  background:var(--link-bg);
-  transition:background .2s, transform .2s ease;
+  color: var(--fg);
+  font-weight: 600;                    /* bold */
+  font-size: 1rem;
+  text-decoration: none;               /* no underline */
+  padding: .5rem .8rem;
+  transition: color .25s ease, transform .25s ease;
 }
 
-/* active page highlight – add class="active" to that link in HTML */
+/* Active link */
 .quick-nav a.active{
-  --link-bg: rgba(0,0,0,.07);
-  color:var(--accent);
+  color: var(--accent);
 }
 
-/* hover lift */
+/* Hover – lighter text + subtle lift */
 .quick-nav a:hover{
-  background:rgba(0,0,0,.06);
-  transform:translateY(-2px);
+  color: color-mix(in oklab, #fff 60%, var(--fg)); /* lighter */
+  transform: translateY(-1px);
 }
 
-/* click “press” */
+/* Pressed state */
 .quick-nav a:active{
-  transform:scale(.93);
+  transform: scale(.93);
+  opacity: .9;
 }
 
-/* right-side “back-to-top” keeps existing behavior */
-.totop{margin-left:auto}
-
-/* Dark-mode tweaks */
+/* ===== Dark mode ===== */
 body.dark .quick-nav{
-  background:rgba(20,20,20,.85);
-  border-color:#222;
+  background: rgba(18,18,18,.85);
+  border-color: #1e1e1e;
+}
+body.dark .quick-nav a{
+  color: var(--fg);
 }
 body.dark .quick-nav a:hover{
-  background:rgba(255,255,255,.08);
+  color: color-mix(in oklab, #fff 80%, var(--fg)); /* even lighter */
 }
 body.dark .quick-nav a.active{
-  --link-bg: rgba(255,255,255,.10);
-  color:var(--accent);
+  color: var(--accent);
 }
+
 
 
 /* ========= SECTIONS ========= */
-.section{max-width:950px;margin:4rem auto;padding:0 1.5rem}
-.section h2{font-size:2rem;color:var(--accent);margin-bottom:2rem}
+.section{max-width:950px;margin:2rem auto;padding:0 1.5rem}
+.section h2{font-size:2rem;color:var(--accent);margin-bottom:1.5rem}
 .section.glass{
   background:var(--glass-bg);border:1px solid var(--glass-brd);
   border-radius:18px;box-shadow:0 4px 30px rgba(0,0,0,.05);padding:2.5rem 2rem;
@@ -207,9 +206,9 @@ body.dark .bar{background:#333}
 
 .edu-logo{
   position:absolute;
-  bottom:-35px;      /* tucks logo just outside the card corner */
+  bottom:-20px;      /* tucks logo just outside the card corner */
   left:-35px;        /* nudge horizontally; tweak as needed     */
-  width:110px;
+  width:90px;
   filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));
   opacity:.85;
   transition:transform .4s ease, opacity .4s ease;
@@ -408,3 +407,234 @@ body.dark .edu-logo{filter:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
   }
   .doc-card ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem}
   
+/* ===== SKILLS — make tag sections match the progress-bar style ===== */
+
+/* grid spacing – keep, but neutralize card look */
+.skills-grid{
+  margin-top: 40px;
+  margin-bottom: 0px;
+  --skills-col-gap: 1.2rem;
+  --skills-row-gap: 1.2rem;
+  gap: var(--skills-row-gap) var(--skills-col-gap);
+}
+
+/* section cards -> flat containers (no pink fill/borders) */
+.skills-col{
+  background: transparent;            /* remove tinted background */
+  border: 0;                          /* remove border */
+  box-shadow: none;                   /* remove shadow */
+  padding: .25rem 0 .75rem;           /* match vertical rhythm of bars */
+  margin: 0;                          /* no extra outer margin */
+}
+
+/* headings styled like labels on the left of bars */
+.skills-col h3{
+  margin: 0 0 .6rem;
+  font-size: 1.05rem;
+font-family: 'Fira Code', monospace;  /* <-- same as .skill-set span */
+  letter-spacing: 0.2px;                /* slight code-like spacing */
+  font-weight: 400;       color: var(--fg);
+}
+
+/* pill list – compact, neutral gray like bar tracks */
+ul.tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem .5rem;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  list-style: none;
+}
+
+/* pills – light track gray, rounded, small type like the bar labels */
+ul.tags li{
+  display: inline-flex;
+  align-items: center;
+  padding: .32rem .58rem;
+  border-radius: 999px;
+  font-size: .9rem;
+  line-height: 1.1;
+  color: var(--fg);
+  background: #e6e6e6;               /* mirrors bar track color */
+  border: 1px solid #dddddd;          /* subtle outline like tracks */
+
+  /* allow long labels to wrap cleanly */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+font-family: 'Fira Code', monospace;  /* <-- same as .skill-set span */
+  letter-spacing: 0.2px;                /* slight code-like spacing */
+  font-weight: 400;                      
+  transition: background-color .15s ease, border-color .15s ease, transform .12s ease;
+}
+
+/* hover – subtle, echoing accent used in bar fill */
+ul.tags li:hover{
+  transform: translateY(-0.5px);
+  background: color-mix(in oklab, var(--accent) 12%, #e6e6e6);
+  border-color: color-mix(in oklab, var(--accent) 28%, #dddddd);
+}
+
+/* small-screen tightening to stay aligned with the first section */
+@media (max-width: 640px){
+  .skills-grid{
+    --skills-col-gap: 1rem;
+    --skills-row-gap: 1rem;
+  }
+  .skills-col h3{ font-size: 1rem; }
+  ul.tags li{ font-size: .88rem; padding: .3rem .54rem; }
+}
+
+
+/* ======== PUBLICATIONS — compact, aligned, accessible ======== */
+#publications{
+
+  --pub-col-gap: 1.25rem;
+  --pub-row-gap: 2rem;
+}
+#publications p{
+  margin:.35rem 0 1rem;
+  color: color-mix(in oklab, var(--fg) 80%, transparent);
+}
+
+#publications ul{
+  margin:0; padding:0; list-style:none;
+  display:grid;
+  gap: var(--pub-row-gap) var(--pub-col-gap);
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  align-items:start;                     /* prevents weird vertical jumps */
+}
+@media (max-width: 720px){
+  #publications ul{ grid-template-columns:1fr; }
+}
+
+#publications li{
+  position:relative;
+  display:flex;
+  align-items:flex-start;                /* baseline-ish alignment */
+  column-gap:.6rem;
+  row-gap:.4rem;
+  padding-left:1.7rem;                   /* space for leading icon */
+  min-height:2.1rem;                     /* keeps rows from collapsing */
+  line-height:1.42;
+}
+
+/* journal/book icon inline with first text line */
+#publications li::before{
+  content:"\f02d";                       /* Font Awesome book */
+  font-family:"Font Awesome 6 Free", "Font Awesome 5 Free", system-ui;
+  font-weight:900;
+  position:absolute;
+  left:0; top:.25em;                     /* visually baseline with first line */
+  font-size:.95rem;
+  color:var(--accent);
+  opacity:.9;
+}
+
+/* link: inline-block so underline/border hugs text and not the whole line */
+#publications a.pub-link{
+  display:inline-block;
+  flex:1 1 auto;
+  color:var(--fg);
+  text-decoration:none;
+  border-bottom:1px dotted color-mix(in oklab, var(--fg) 30%, transparent);
+  padding-bottom:.06rem;                 /* optical balance for dotted border */
+  transition:color .15s ease, border-color .15s ease, transform .15s ease;
+  will-change: color, border-color;
+}
+
+/* external-link glyph tight to text, not huge */
+#publications a.pub-link::after{
+  content:"\f35d";
+  font-family:"Font Awesome 6 Free", "Font Awesome 5 Free", system-ui;
+  font-weight:900;
+  font-size:.78em;
+  margin-left:.35rem;
+  opacity:.55;
+  vertical-align:baseline;
+  transition:opacity .15s ease, transform .15s ease;
+}
+
+#publications a.pub-link:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+}
+#publications a.pub-link:hover::after{
+  opacity:.95;
+  transform: translateY(-1px);
+}
+
+/* focus-visible styles for keyboard users */
+#publications a.pub-link:focus-visible{
+  outline:2px solid color-mix(in oklab, var(--accent) 70%, white);
+  outline-offset:2px;
+  border-color:transparent;
+}
+
+/* badge sits to the right; wraps under the link on narrow widths */
+#publications .badge{
+  flex:0 0 auto;
+  font-size:.7rem;
+  padding:.22rem .5rem;
+  border-radius:6px;
+  background:color-mix(in oklab, var(--accent) 14%, transparent);
+  border:1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  color:var(--fg);
+  line-height:1.1;
+  translate: 0 .04rem;                  /* small nudge to align optically */
+}
+
+/* subtle card-like grouping without boxes */
+#publications li:hover{
+  transform: translateY(-1px);
+}
+@media (prefers-reduced-motion: reduce){
+  #publications a.pub-link, #publications a.pub-link::after, #publications li{
+    transition:none;
+  }
+}
+/* ===== Modal (image lightbox) ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  padding-top: 60px;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background: rgba(0,0,0,0.85);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 85%;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  animation: zoomIn .3s ease;
+}
+
+#modal-caption {
+  margin: 1rem auto;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.close {
+  position: absolute;
+  top: 15px; right: 35px;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

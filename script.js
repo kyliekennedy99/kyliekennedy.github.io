@@ -32,3 +32,22 @@ const barObserver = new IntersectionObserver(
   { threshold: 0.4 }
 );
 bars.forEach((b) => barObserver.observe(b));
+
+/* ========= IMAGE MODAL GALLERY ========= */
+const modal = document.getElementById("img-modal");
+const modalImg = document.getElementById("modal-img");
+const captionText = document.getElementById("modal-caption");
+const closeBtn = document.querySelector(".modal .close");
+
+document.querySelectorAll(".gallery img").forEach(img => {
+  img.addEventListener("click", () => {
+    modal.style.display = "block";
+    modalImg.src = img.src;
+    captionText.innerText = img.getAttribute("data-caption") || img.alt;
+  });
+});
+
+closeBtn.onclick = () => { modal.style.display = "none"; };
+modal.onclick = (e) => {
+  if (e.target === modal) modal.style.display = "none";
+};
