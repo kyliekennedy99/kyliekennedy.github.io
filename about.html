@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
-<body id="top">
+<body id="top" class="about">
   <header class="hero subpage-hero">
     <h1>About Me</h1>
   </header>
@@ -33,36 +33,68 @@
     <div class="about-hero">
       <img
         class="profile-pic"
-        src="https://videos.openai.com/vg-assets/assets%2Ftask_01k1vs0mmxfj18kc7rk1bp35r3%2F1754352688_img_0.webp?st=2025-08-04T22%3A39%3A34Z&se=2025-08-10T23%3A39%3A34Z&sks=b&skt=2025-08-04T22%3A39%3A34Z&ske=2025-08-10T23%3A39%3A34Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=8ebb0df1-a278-4e2e-9c20-f2d373479b3a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=otKXyheES3JNkRPMVrsJsJGcDpjoo8XLGbP9FWD5okw%3D&az=oaivgprodscus"  alt= "Kylie Kennedy smiling" />
+        src="IMG_2972.jpg"  alt= "Kylie Kennedy smiling" />
   
       <div class="about-text">
         <p>
-          Hi, I’m <strong>Kylie</strong>—a fourth-year Computer Science student at
-          UW-Madison who loves building delightful full-stack apps, mentoring new
-          coders, and spending Saturdays paddling on Lake Mendota. My research
-          interests revolve around data-driven UX and distributed systems, and
-          I’m currently exploring serverless architectures for real-time
-          collaboration tools.
-        </p>
-  
-        <p>
-          Beyond the terminal you’ll find me running the Lakeshore Path, sketching
-          UI mock-ups in Procreate, or cheering on the Badgers at Camp Randall.
-        </p>
+  Hi, I’m <strong>Kylie Kennedy</strong>—a recent graduate of Computer Science student from UW–Madison.
+  I build fast, delightful full-stack apps (React/TypeScript, Python/Node, SQL),
+  mentor new coders, and love turning messy data into simple, usable UX.
+</p>
+
+<p>
+  Lately I’ve been exploring serverless, event-driven systems for real-time collaboration
+  and distributed reliability. When I’m not coding, you’ll find me running the
+  Lakeshore Path, sketching UI ideas in Procreate, or paddling on Lake Mendota—and
+  cheering on the Badgers at Camp Randall.
+</p>
+
       </div>
     </div>
   
     <!-- === Image gallery === -->
     <h2 style="margin-top:3rem">Photo Journal</h2>
   
-    <div class="gallery">
-      <img src="https://res.cloudinary.com/simpleview/image/upload/v1581961174/clients/madison/16_SUMMER_Mendota_Klinge_84e30ae3-6363-4339-bfa3-ae6e0f7ed7ba.jpg"    alt="Ice boating on Lake Mendota" />
-      <img src="https://res.cloudinary.com/simpleview/image/upload/v1581961174/clients/madison/16_SUMMER_Mendota_Klinge_84e30ae3-6363-4339-bfa3-ae6e0f7ed7ba.jpg"  alt="Hackathon team demo" />
-      <img src="https://res.cloudinary.com/simpleview/image/upload/v1581961174/clients/madison/16_SUMMER_Mendota_Klinge_84e30ae3-6363-4339-bfa3-ae6e0f7ed7ba.jpg"    alt="Campus sunrise" />
-      <img src="https://res.cloudinary.com/simpleview/image/upload/v1581961174/clients/madison/16_SUMMER_Mendota_Klinge_84e30ae3-6363-4339-bfa3-ae6e0f7ed7ba.jpg"      alt="Bucky Badger selfie" />
-      <img src="https://res.cloudinary.com/simpleview/image/upload/v1581961174/clients/madison/16_SUMMER_Mendota_Klinge_84e30ae3-6363-4339-bfa3-ae6e0f7ed7ba.jpg"  alt="Finish line at Ironman 70.3" />
-      <!-- add / remove images freely -->
-    </div>
+<h3 class="gallery-heading">Hobbies</h3>
+<div class="gallery" id="gallery-hobbies">
+  <figure class="photo">
+    <img src="iceland.jpg" alt="Iceland trip" data-caption="Iceland trip" loading="lazy" />
+  </figure>
+  <figure class="photo">
+    <img src="golf.PNG" alt="Golf afternoon" data-caption="Golf afternoon" loading="lazy" />
+  </figure>
+  <figure class="photo">
+    <img src="keycaps.jpg" alt="Custom keycaps build" data-caption="Custom keycaps build" loading="lazy" />
+  </figure>
+</div>
+
+<h3 class="gallery-heading">Projects</h3>
+<div class="gallery" id="gallery-projects">
+  <figure class="photo">
+    <img src="location.png" alt="Location app map UI" data-caption="Location app map UI" loading="lazy" />
+  </figure>
+  <figure class="photo">
+    <img src="profile.png" alt="Profile screen design" data-caption="Profile screen design" loading="lazy" />
+  </figure>
+  <figure class="photo">
+    <img src="mod.png" alt="Moderation dashboard" data-caption="Moderation dashboard" loading="lazy" />
+  </figure>
+</div>
+
+
+
+<!-- Modal for enlarged image -->
+<!-- Modal for enlarged image -->
+<div id="img-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <button class="close" aria-label="Close image">&times;</button>
+  <button class="nav prev" aria-label="Previous image">&#8249;</button>
+  <button class="nav next" aria-label="Next image">&#8250;</button>
+  <img class="modal-content" id="modal-img" alt="">
+  <div id="modal-caption"></div>
+</div>
+
+
+
   
   </main>
   

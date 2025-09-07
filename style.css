@@ -221,15 +221,43 @@ body.dark .bar{background:#333}
 
 body.dark .edu-logo{filter:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
 
-
-/* === Sub-page hero banner === */
+/* === Sub-page hero banner (blur ONLY the background image) === */
+/* ===== Per-page hero with blur only on background ===== */
 .subpage-hero{
-    min-height:45vh;                                 /* shorter banner   */
-    background:
-      linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-      url("https://i.ibb.co/hRYwDr39/Mendota-shoreline.jpg") center/cover no-repeat;
-  }
-  .subpage-hero h1{color:#fff;font-size:clamp(2rem,4vw,3rem)}
+  position: relative;
+  min-height: 45vh;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Blurred background image (pulled from a CSS variable) */
+.subpage-hero::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hero-img, url("images/default-hero.jpg")) center/cover no-repeat;
+  filter: blur(var(--hero-blur, 6px));
+  transform: scale(1.05);
+  z-index: -2;
+}
+
+/* Crisp overlay (color also configurable) */
+.subpage-hero::after{
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(var(--hero-overlay, rgba(0,0,0,.55)), var(--hero-overlay, rgba(0,0,0,.55)));
+  z-index: -1;
+}
+
+.subpage-hero h1{
+  position: relative;
+  font-size: clamp(2rem,4vw,3rem);
+  color:#fff;
+}
+
   
   /* === Portfolio grid === */
   .portfolio-grid{
@@ -332,12 +360,40 @@ body.dark .edu-logo{filter:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
     align-items:center;
   }
   .profile-pic{
-    width:180px;
-    height:180px;
-    object-fit:cover;
-    border-radius:50%;
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
+  width:180px;
+  height:180px;
+  object-fit:cover;
+  border-radius:50%;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* hover effect (desktop) */
+@media (hover:hover) and (pointer:fine){
+  .profile-pic:hover{
+    transform: translateY(-2px) scale(1.03);
+    /* add a soft red glow + keep a subtle base shadow */
+    box-shadow:
+      0 6px 18px rgba(0,0,0,.12),
+      0 0 0 4px rgba(49, 10, 10, 0.877),
+      0 10px 26px rgba(220,38,38,.18);
+    cursor: pointer;
   }
+}
+
+/* keyboard focus */
+.profile-pic:focus-visible{
+  outline: 2px solid rgba(220,38,38,.7);
+  outline-offset: 4px;
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .profile-pic{ transition: box-shadow .18s ease; }
+  .profile-pic:hover,
+  .profile-pic:focus-visible{ transform: none; }
+}
+
   .about-text{
     flex:1 1 260px;
     display:flex;
@@ -597,44 +653,138 @@ ul.tags li:hover{
   }
 }
 /* ===== Modal (image lightbox) ===== */
+/* ===== Image Lightbox (Modal) ===== */
 .modal {
   display: none;
   position: fixed;
+  inset: 0;
   z-index: 2000;
-  padding-top: 60px;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  overflow: auto;
+  padding: 60px 16px 24px;
   background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
-  margin: auto;
   display: block;
-  max-width: 85%;
+  margin: 0 auto;
+  max-width: min(90vw, 1100px);
+  max-height: 78vh;
+  width: auto;
+  height: auto;
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-  animation: zoomIn .3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  animation: zoomIn .25s ease;
 }
 
 #modal-caption {
-  margin: 1rem auto;
-  text-align: center;
+  margin: 1rem auto 0;
+  max-width: 90vw;
   color: #fff;
+  text-align: center;
   font-size: 1rem;
-  font-weight: 400;
+  opacity: 0.9;
 }
 
-.close {
+.modal .close {
   position: absolute;
-  top: 15px; right: 35px;
+  top: 14px;
+  right: 18px;
+  line-height: 1;
+  border: 0;
+  background: transparent;
   color: #fff;
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
+  padding: 6px 10px;
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.7); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from { transform: scale(.9); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+/* Optional: small polish for gallery thumbs */
+.gallery img {
+  border-radius: 10px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.gallery img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.18);
+}
+/* disable background scroll while modal open */
+body.no-scroll { overflow: hidden; }
+
+/* modal nav arrows */
+.modal .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid; place-items: center;
+}
+.modal .nav.prev { left: 14px; }
+.modal .nav.next { right: 14px; }
+.modal .nav:hover { background: rgba(255,255,255,.2); }
+.modal .nav:focus { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* ====== Gallery (uniform tiles) ====== */
+.gallery-heading { margin: 1.5rem 0 .75rem; font-size: 1.1rem; opacity: .85; }
+
+.gallery{
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.gallery .photo{
+  position: relative;
+  aspect-ratio: 4 / 3;         /* <- all tiles same ratio */
+  border-radius: 12px;
+  overflow: hidden;
+  background: #eee;
+}
+
+.gallery .photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* crops to fill the frame */
+  display: block;
+  transition: transform .18s ease;
+  cursor: zoom-in;
+}
+
+.gallery .photo:hover img{ transform: scale(1.02); }
+
+/* ===== Per-page hero images ===== */
+body.about{
+  --hero-img: url("https://res.cloudinary.com/enchanting/q_70,f_auto,c_lfill,g_auto/exodus-web/2021/12/kirkjufellsfoss_iceland.jpg");
+  --hero-overlay: rgba(0,0,0,.55);
+  --hero-blur: 6px;
+}
+
+body.portfolio{
+  --hero-img: url("https://images.ctfassets.net/a68ipajj4t9l/3gXW9WmcILhrSRxgjNllvc/2142604d47b67391cc50cf6299a8d957/The_midnight_sun_in_Iceland-4.jpg?w=1200&q=60");
+  --hero-overlay: rgba(8, 10, 24, .55);  /* a bit cooler/darker */
+  --hero-blur: 5px;
+}
+
+body.contact{
+  --hero-img: url("https://www.nationalgeographic.com/content/dam/expeditions/destinations/europe/land/Iceland-Volcanoes-Glaciers-Whales/hero-iceland-land-new-1.jpg");
+  --hero-overlay: rgba(0,0,0,.45);
+  --hero-blur: 4px;
+}
+
+body.docs{
+  --hero-img: url("https://images.ctfassets.net/a68ipajj4t9l/5zp54GsWKeSXXUKrLWZPmZ/30f7c26e2842322788b69e766a25d1b9/Web_Large-Jokulsarlon-sunset-winter-SS1__1_.jpg?w=2400&q=60");
+  --hero-overlay: rgba(0,0,0,.5);
+  --hero-blur: 6px;
 }

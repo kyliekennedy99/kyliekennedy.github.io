@@ -1,9 +1,11 @@
-/* ========= DARK-MODE TOGGLE ========= */
-const toggleBtn = document.getElementById("theme-toggle");
-toggleBtn.onclick = () => document.body.classList.toggle("dark");
+/* ========= THEME TOGGLE (safe across pages) ========= */
+const themeBtn = document.getElementById("theme-toggle");
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => document.body.classList.toggle("dark"));
+}
 
 /* ========= SCROLL-REVEAL ========= */
-const observer = new IntersectionObserver(
+const revealObserver = new IntersectionObserver(
   (entries, obs) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -15,11 +17,10 @@ const observer = new IntersectionObserver(
   { threshold: 0.15 }
 );
 document.querySelectorAll(".timeline li, .glass, .skill-set").forEach((el) => {
-  observer.observe(el);
+  revealObserver.observe(el);
 });
 
 /* ========= ANIMATE SKILL BARS WHEN IN VIEW ========= */
-const bars = document.querySelectorAll(".bar");
 const barObserver = new IntersectionObserver(
   (entries, obs) => {
     entries.forEach((e) => {
@@ -31,23 +32,125 @@ const barObserver = new IntersectionObserver(
   },
   { threshold: 0.4 }
 );
-bars.forEach((b) => barObserver.observe(b));
+document.querySelectorAll(".bar").forEach((b) => barObserver.observe(b));
 
 /* ========= IMAGE MODAL GALLERY ========= */
-const modal = document.getElementById("img-modal");
-const modalImg = document.getElementById("modal-img");
-const captionText = document.getElementById("modal-caption");
-const closeBtn = document.querySelector(".modal .close");
+/* ========= IMAGE MODAL GALLERY (arrows + keys + swipe) ========= */
+(() => {
+  const modal = document.getElementById("img-modal");
+  const modalImg = document.getElementById("modal-img");
+  const captionText = document.getElementById("modal-caption");
+  const closeBtn = document.querySelector(".modal .close");
+  const prevBtn = document.querySelector(".modal .nav.prev");
+  const nextBtn = document.querySelector(".modal .nav.next");
+  const thumbs = Array.from(document.querySelectorAll(".gallery img"));
 
-document.querySelectorAll(".gallery img").forEach(img => {
-  img.addEventListener("click", () => {
-    modal.style.display = "block";
+  if (!modal || !modalImg || !captionText || !closeBtn || !prevBtn || !nextBtn || thumbs.length === 0) return;
+
+  let current = 0;
+
+  const openAt = (i) => {
+    current = (i + thumbs.length) % thumbs.length;
+    const img = thumbs[current];
     modalImg.src = img.src;
-    captionText.innerText = img.getAttribute("data-caption") || img.alt;
-  });
-});
+    captionText.textContent = img.dataset.caption || img.alt || "";
+    modal.style.display = "block";
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+  };
 
-closeBtn.onclick = () => { modal.style.display = "none"; };
-modal.onclick = (e) => {
-  if (e.target === modal) modal.style.display = "none";
-};
+  const closeModal = () => {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+  };
+
+  const go = (delta) => openAt(current + delta);
+
+  // Click thumbs to open
+  thumbs.forEach((img, i) => {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => openAt(i));
+  });
+
+  // Controls
+  prevBtn.addEventListener("click", (e) => { e.stopPropagation(); go(-1); });
+  nextBtn.addEventListener("click", (e) => { e.stopPropagation(); go(1); });
+  closeBtn.addEventListener("click", closeModal);
+
+  // Backdrop click
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+
+  // Keyboard
+  document.addEventListener("keydown", (e) => {
+    if (modal.style.display !== "block") return;
+    if (e.key === "Escape") closeModal();
+    else if (e.key === "ArrowRight") go(1);
+    else if (e.key === "ArrowLeft") go(-1);
+  });
+
+  // Basic swipe on modal
+  let touchX = null;
+  modal.addEventListener("touchstart", (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+  modal.addEventListener("touchend", (e) => {
+    if (touchX == null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+    touchX = null;
+  }, { passive: true });
+})();
+
+/* ========= IMAGE MODAL GALLERY (scoped per section) ========= */
+(() => {
+  const modal = document.getElementById("img-modal");
+  const modalImg = document.getElementById("modal-img");
+  const captionText = document.getElementById("modal-caption");
+  const closeBtn = document.querySelector(".modal .close");
+  const prevBtn = document.querySelector(".modal .nav.prev");
+  const nextBtn = document.querySelector(".modal .nav.next");
+
+  if (!modal || !modalImg || !captionText || !closeBtn) return;
+
+  let currentList = [];
+  let current = 0;
+
+  const openAt = (i) => {
+    current = (i + currentList.length) % currentList.length;
+    const img = currentList[current];
+    modalImg.src = img.src;
+    captionText.textContent = img.dataset.caption || img.alt || "";
+    modal.style.display = "block";
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+  };
+
+  const closeModal = () => {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+  };
+
+  // Click to open — picks only images from the clicked gallery
+  document.querySelectorAll(".gallery").forEach(gallery => {
+    const imgs = Array.from(gallery.querySelectorAll("img"));
+    imgs.forEach((img, i) => {
+      img.addEventListener("click", () => { currentList = imgs; openAt(i); });
+    });
+  });
+
+  const go = (d) => openAt(current + d);
+
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", (e) => { e.stopPropagation(); go(-1); });
+    nextBtn.addEventListener("click", (e) => { e.stopPropagation(); go(1); });
+  }
+
+  closeBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", (e) => {
+    if (modal.style.display !== "block") return;
+    if (e.key === "Escape") closeModal();
+    else if (e.key === "ArrowRight") go(1);
+    else if (e.key === "ArrowLeft") go(-1);
+  });
+})();
