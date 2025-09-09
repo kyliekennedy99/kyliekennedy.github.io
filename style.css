@@ -260,11 +260,15 @@ body.dark .edu-logo{filter:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
 
   
   /* === Portfolio grid === */
-  .portfolio-grid{
-    display:grid;
-    gap:1.5rem;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  }
+ .portfolio-grid {
+  display: grid;
+  gap: 1rem;
+  /* increase minimum size so items stretch more */
+  grid-template-columns: repeat(auto-fill, minmax(50% 1fr));
+  max-width:800px; /* optional: increase container width */
+  margin: 0 auto; /* center the grid */
+}
+
   .project{
     position:relative;
     overflow:hidden;
